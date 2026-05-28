@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jazen Gabriel | Home</title>
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        if (localStorage.getItem('portfolio-theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+    <div class="blood-moon"></div>
+    <div class="moon-glow"></div>
+    <div class="fog-layer fog-1"></div>
+    <div class="fog-layer fog-2"></div>
+    <div class="fog-layer fog-3"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="vignette"></div>
+
+    <div class="gothic-border top-border"></div>
+    <div class="gothic-border bottom-border"></div>
+
+    <nav>
+        <div class="nav-rune left-rune">✦</div>
+        <a href="index.html" class="logo">
+            <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="certifications.html">Certifications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div class="nav-rune right-rune">✦</div>
+        </div>
+    </nav>
+
+    <main class="container hero">
+
+        <div class="hero-eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">BSCpE Student · University of Bohol</span>
+            <span class="eyebrow-line"></span>
+        </div>
+
+        <h1 class="hero-name">
+            <span class="name-line-1" data-text="JAZEN">JAZEN</span>
+            <span class="name-line-2" data-text="GABRIEL">GABRIEL</span>
+        </h1>
+
+        <div class="hero-role-wrapper">
+            <div class="role-ornament">❧</div>
+            <p class="hero-role">I'm a <span class="typewriter-text"></span><span class="cursor-blink">|</span></p>
+            <div class="role-ornament flipped">❧</div>
+        </div>
+
+        <p class="hero-tagline">"First, solve the problem. Then, write the code.<br>Simplicity is the ultimate sophistication in software design."</p>
+
+        <div class="social-links">
+            <a href="https://github.com/Wolfgabriel271" target="_blank" rel="noopener" class="social-icon" data-tooltip="GitHub">
+                <i class="fa-brands fa-github"></i>
+                <span class="social-ripple"></span>
+            </a>
+            <a href="https://www.facebook.com/Charlie.Morningstar.27" target="_blank" rel="noopener" class="social-icon" data-tooltip="Facebook">
+                <i class="fab fa-facebook-f"></i>
+                <span class="social-ripple"></span>
+            </a>
+            <a href="https://www.instagram.com/stellar_normad/" target="_blank" rel="noopener" class="social-icon" data-tooltip="Instagram">
+                <i class="fab fa-instagram"></i>
+                <span class="social-ripple"></span>
+            </a>
+            <a href="https://x.com/Iamjazengabriel" target="_blank" rel="noopener" class="social-icon" data-tooltip="X / Twitter">
+                <i class="fa-brands fa-x-twitter"></i>
+                <span class="social-ripple"></span>
+            </a>
+            <a href="https://www.tiktok.com/@charliemorningstar2467" target="_blank" rel="noopener" class="social-icon" data-tooltip="TikTok">
+                <i class="fab fa-tiktok"></i>
+                <span class="social-ripple"></span>
+            </a>
+        </div>
+
+        <div class="hero-cta-group">
+            <a href="about.html" class="btn-primary">
+                <span class="btn-glow"></span>
+                <i class="fa-solid fa-user"></i> Discover My Story
+            </a>
+            <a href="resume.html" class="btn-secondary">
+                <i class="fa-solid fa-scroll"></i> View Resume
+            </a>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>SCROLL</span>
+        </div>
+
+    </main>
+
+    <section class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-number" data-target="19">0</span>
+            <span class="stat-label">Years Old</span>
+        </div>
+        <div class="stat-divider">✦</div>
+        <div class="stat-item">
+            <span class="stat-number" data-target="2">0</span>+
+            <span class="stat-label">Years Coding</span>
+        </div>
+        <div class="stat-divider">✦</div>
+        <div class="stat-item">
+            <span class="stat-number" data-target="3">0</span>+
+            <span class="stat-label">Projects Built</span>
+        </div>
+        <div class="stat-divider">✦</div>
+        <div class="stat-item">
+            <span class="stat-number" data-target="1">0</span>
+            <span class="stat-label">Dream: Senior Software Engineer</span>
+        </div>
+    </section>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

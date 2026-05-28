@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jazen Gabriel | About</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        if (localStorage.getItem('portfolio-theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+    <div class="blood-moon"></div>
+    <div class="moon-glow"></div>
+    <div class="fog-layer fog-1"></div>
+    <div class="fog-layer fog-2"></div>
+    <div class="fog-layer fog-3"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="vignette"></div>
+
+    <div class="gothic-border top-border"></div>
+    <div class="gothic-border bottom-border"></div>
+
+    <nav>
+        <div class="nav-rune left-rune">✦</div>
+        <a href="index.html" class="logo">
+            <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="certifications.html">Certifications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div class="nav-rune right-rune">✦</div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <div class="section-label">
+                <span class="label-rune">✦</span> ABOUT <span class="label-rune">✦</span>
+            </div>
+            <h1 class="page-title">My Story</h1>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="about-grid">
+
+            <div class="profile-wrapper">
+                <div class="profile-frame">
+                    <div class="frame-corner tl"></div>
+                    <div class="frame-corner tr"></div>
+                    <div class="frame-corner bl"></div>
+                    <div class="frame-corner br"></div>
+                    <img src="jazenme.jpg" alt="Portrait of Jazen Gabriel" class="profile-img">
+                    <div class="profile-blood-overlay"></div>
+                    <div class="profile-glow"></div>
+                </div>
+                <div class="profile-name-plate">
+                    <span>JAZEN GABRIEL M. DIGAMON</span>
+                </div>
+            </div>
+
+            <div class="about-info">
+                <div class="about-title-block">
+                    <h2>Jazen Gabriel M. Digamon</h2>
+                    <h3><em>Computer Engineering Student · Aspiring Senior Software Engineer</em></h3>
+                </div>
+
+                <div class="info-list">
+                    <div class="info-item">
+                        <i class="fa-brands fa-github"></i>
+                        <strong>GitHub</strong>
+                        <span>Wolfgabriel271</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-cake-candles"></i>
+                        <strong>Age</strong>
+                        <span>19 Years Old</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-brands fa-linkedin"></i>
+                        <strong>LinkedIn</strong>
+                        <span>Jazen Gabriel Digamon</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <strong>Email</strong>
+                        <span>jazdigamon12@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-code"></i>
+                        <strong>Languages</strong>
+                        <span>C++, Java, Python, PHP</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <strong>Education</strong>
+                        <span>BSCpE Student</span>
+                    </div>
+                </div>
+
+                <div class="about-bio">
+                    <p>Hello everyone, my name is <strong>Jazen Gabriel M. Digamon</strong>. I was born on January 29, 2007. I am the eldest of two boys, born to my loving parents Jaeward and Zelyn Digamon.</p>
+                    <p>Growing up wasn't always easy. Back in grade school, I suffered a severe incident where a classmate poked me in the eye with a pencil, forcing me to transfer schools. Sadly, the bullying continued. However, I am endlessly thankful to my mother who always stood by me. These challenges shaped my resilience.</p>
+                    <p>Today, my ultimate goal is to become a <strong>Senior Software Engineer</strong>. I have a deep passion for programming, algorithmic complexity, and scalable software ecosystems. The ability to architect clean object-oriented code, manage diverse logic, and construct robust architectures drives my ambition every single day.</p>
+                </div>
+
+                <div class="quote">
+                    <div class="quote-icon">❝</div>
+                    <p>"Any fool can write code that a computer can understand. Good programmers write code that humans can understand."</p>
+                    <div class="quote-author">— Martin Fowler</div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

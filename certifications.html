@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jazen Gabriel | Certifications</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        if (localStorage.getItem('portfolio-theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <div class="blood-moon"></div>
+    <div class="moon-glow"></div>
+    <div class="fog-layer fog-1"></div>
+    <div class="fog-layer fog-2"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="vignette"></div>
+    
+    <div class="gothic-border top-border"></div>
+    <div class="gothic-border bottom-border"></div>
+
+    <nav>
+        <div class="nav-rune left-rune">✦</div>
+        <a href="index.html" class="logo">
+            <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="certifications.html" class="active">Certifications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div class="nav-rune right-rune">✦</div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <div class="section-label">
+                <span class="label-rune">✦</span> CREDENTIALS <span class="label-rune">✦</span>
+            </div>
+            <h1 class="page-title">Certifications</h1>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="certificate-gallery reveal-hidden">
+            
+            <div id="display-box" class="cert-display">
+                <!-- Cert 1 defaults to .jpg -->
+                <img id="main-cert-image" src="Certificate 1.jpg" alt="Active Certification">
+            </div>
+            
+            <p id="cert-description" class="cert-description">Code to Connect: Programming Languages and Databases 101</p>
+
+            <div class="cert-thumbnails">
+                <div class="cert-thumb active" onclick="showCertificate('Certificate 1.jpg', 'Code to Connect: Programming Languages and Databases 101', this)">
+                    <img src="Certificate 1.jpg" alt="Cert 1">
+                </div>
+                <div class="cert-thumb" onclick="showCertificate('Certificate 2.png', 'Low-Level Control: Programming Arduino Using Assembly Language', this)">
+                    <!-- Cert 2 set to .png -->
+                    <img src="Certificate 2.png" alt="Cert 2">
+                </div>
+                <div class="cert-thumb" onclick="showCertificate('Certificate 3.png', 'COMPFEST 2026: Connecting Minds to Power Sustainable Innovation', this)">
+                    <!-- Cert 3 set to .png -->
+                    <img src="Certificate 3.png" alt="Cert 3">
+                </div>
+                <div class="cert-thumb" onclick="showCertificate('Certificate 4.png', 'ROBOSEUM: Creating the Future One Robot at a Time', this)">
+                    <!-- Cert 4 set to .png -->
+                    <img src="Certificate 4.png" alt="Cert 4">
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

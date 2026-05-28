@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jazen Gabriel | Projects</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        if (localStorage.getItem('portfolio-theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <div class="blood-moon"></div>
+    <div class="moon-glow"></div>
+    <div class="fog-layer fog-1"></div>
+    <div class="fog-layer fog-2"></div>
+    <canvas id="bg-canvas"></canvas>
+    
+    <div class="gothic-border top-border"></div>
+    <div class="gothic-border bottom-border"></div>
+
+    <nav>
+        <div class="nav-rune left-rune">✦</div>
+        <a href="index.html" class="logo">
+            <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li>
+            <li><a href="certifications.html">Certifications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div class="nav-rune right-rune">✦</div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <div class="section-label">
+                <span class="label-rune">✦</span> PORTFOLIO <span class="label-rune">✦</span>
+            </div>
+            <h1 class="page-title">My Works</h1>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="projects-grid" id="projects-container">
+            
+            <div class="project-box reveal-hidden" data-project-id="foursight">
+                <div class="project-image">
+                    <img src="Foursight Car Rental Management System.png" alt="Foursight Car Rental Management System">
+                </div>
+                <div class="project-info">
+                    <h3>Foursight Car Rentals</h3>
+                    <p>A comprehensive C program implementing a full-featured car rental management system. Features include role-based login, live dashboards, automated late fee calculation, barcode generation, and detailed reporting with an ANSI color console UI.</p>
+                    
+                    <div class="project-actions">
+                        <a href="https://drive.google.com/drive/u/1/folders/1zpuuSNAwoMHz94zhKZpZjiJakFftrMV_" target="_blank" rel="noopener" class="folder-btn">
+                            <i class="fa-solid fa-folder-open"></i> Source Code
+                        </a>
+                        <button class="plus-btn view-details-btn" data-project="foursight" title="Read Full Description">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-box reveal-hidden" data-project-id="kapeinato">
+                <div class="project-image">
+                    <img src="Final kapeinato 2.png" alt="Kape Inato Cafe Management System">
+                </div>
+                <div class="project-info">
+                    <h3>Kape Inato Cafe System</h3>
+                    <p>A full-stack cafe management web system featuring a customer-facing online ordering platform and a comprehensive administrative backend for inventory, sales tracking, and menu management, powered by PHP and MySQLi.</p>
+                    
+                    <div class="project-actions">
+                        <a href="https://drive.google.com/drive/u/1/folders/1C8-FlzOtFIf42h5cdC_Se1Aa4Qq9IAmN" target="_blank" rel="noopener" class="folder-btn">
+                            <i class="fa-solid fa-folder-open"></i> Source Code
+                        </a>
+                        <button class="plus-btn view-details-btn" data-project="kapeinato" title="Read Full Description">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="project-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
+                </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
