@@ -76,7 +76,10 @@ if (canvas) {
     let W = canvas.width  = window.innerWidth;
     let H = canvas.height = window.innerHeight;
 
-    const S     = Math.min(90, Math.floor(W * H / 12000));
+    // Reduce particle count on mobile for better performance
+    const isMobile = W < 768;
+    const mobileParticleFactor = isMobile ? 0.5 : 1;
+    const S     = Math.min(90, Math.floor(W * H / 12000) * mobileParticleFactor);
     const sx    = new Float32Array(S), sy   = new Float32Array(S);
     const sbx   = new Float32Array(S), sby  = new Float32Array(S);
     const ssize = new Float32Array(S), sop  = new Float32Array(S);
@@ -95,7 +98,8 @@ if (canvas) {
         sdim[i]  = Math.random() > 0.7 ? 1 : 0;
     }
 
-    const E     = 10;
+    // Reduce emitter count on mobile for better performance
+    const E     = isMobile ? 5 : 10;
     const ex    = new Float32Array(E), ey    = new Float32Array(E);
     const evx   = new Float32Array(E), evy   = new Float32Array(E);
     const elife = new Float32Array(E), edec  = new Float32Array(E);

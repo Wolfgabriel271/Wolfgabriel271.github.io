@@ -558,3 +558,88 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* Mobile-specific optimizations */
+@media (max-width: 480px) {
+    /* Reduce nav height for mobile */
+    :root {
+        --nav-height: 60px;
+    }
+
+    /* Adjust decorative elements for better performance and layout on mobile */
+    .blood-moon {
+        width: 150px;
+        height: 150px;
+        top: -40px;
+    }
+
+    .moon-glow {
+        width: 240px;
+        height: 240px;
+        top: -80px;
+    }
+
+    .fog-layer {
+        filter: blur(15px);
+    }
+
+    .fog-1 { height: 180px; }
+    .fog-2 { height: 120px; bottom: 50px; }
+    .fog-3 { height: 80px; bottom: 30%; }
+
+    /* Adjust hero section spacing */
+    .hero-eyebrow { margin-bottom: 20px; }
+    .hero-name { margin-bottom: 24px; }
+    .hero-role-wrapper { margin-bottom: 8px; }
+    .hero-tagline { margin-bottom: 30px; }
+    .social-links { margin-bottom: 30px; }
+    .hero-cta-group { gap: 12px; }
+    .scroll-indicator { bottom: 30px; }
+
+    /* Adjust stats bar */
+    .stats-bar { padding: 30px 5%; }
+    .stat-number { margin-bottom: 6px; }
+    .stat-label { font-size: 0.55rem; }
+
+    /* Ensure touch targets are adequate */
+    .theme-btn,
+    .social-icon,
+    .btn-primary,
+    .btn-secondary,
+    .folder-btn,
+    .plus-btn,
+    .close-modal {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Adjust project boxes */
+    .project-image { height: 180px; }
+    .project-info { padding: 20px; }
+    .project-actions { padding-top: 12px; }
+
+    /* Adjust certificate gallery */
+    .cert-display { padding: 10px; }
+    .cert-description { font-size: 0.9rem; }
+    .cert-thumb { padding: 3px; }
+
+    /* Adjust contact form */
+    .contact-form-wrapper { padding: 25px 15px; }
+    .form-control { padding: 10px 0; font-size: 0.9rem; }
+    .btn-primary { padding: 12px 28px; }
+
+    /* Adjust skills grid to single column on very small screens */
+    @media (max-width: 360px) {
+        .skills-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Reduce animation intensity if needed */
+    .reveal-hidden {
+        transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+}
