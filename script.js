@@ -167,11 +167,13 @@ if (canvas) {
     let moonX = 0, moonY = 0;
 
     function getParticleColors() {
-        const isDark = document.documentElement.classList.contains('dark-mode');
+        const isDark = document.documentElement.classList.contains('dark-mode') ||
+                       !document.documentElement.classList.contains('dark-mode') &&
+                       getComputedStyle(document.documentElement).getPropertyValue('--bg-grad-top').trim().startsWith('#0');
         return {
-            main: isDark ? '#ffffff' : '#333333',
-            dim:  isDark ? '#7a7a7a' : '#888888',
-            dust: isDark ? '#e8e0d0' : '#555555'
+            main: '#D4A017',
+            dim:  '#7A6A30',
+            dust: '#C9870A'
         };
     }
 
