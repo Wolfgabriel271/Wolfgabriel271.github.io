@@ -30,7 +30,53 @@ if (themeIcon && document.documentElement.classList.contains('dark-mode')) {
 }
 
 // =========================================
-// 2. MOUSE TRACKING
+// 2. HAMBURGER MENU LOGIC
+// =========================================
+const hamburgerBtn   = document.getElementById('hamburger-btn');
+const navLinks       = document.querySelector('.nav-links');
+const menuOverlay    = document.getElementById('mobile-menu-overlay');
+
+function openMobileMenu() {
+    hamburgerBtn.classList.add('open');
+    navLinks.classList.add('open');
+    menuOverlay.classList.add('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+    hamburgerBtn.classList.remove('open');
+    navLinks.classList.remove('open');
+    menuOverlay.classList.remove('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+}
+
+if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', () => {
+        const isOpen = navLinks.classList.contains('open');
+        isOpen ? closeMobileMenu() : openMobileMenu();
+    });
+}
+
+if (menuOverlay) {
+    menuOverlay.addEventListener('click', closeMobileMenu);
+}
+
+// Close menu when a nav link is tapped
+if (navLinks) {
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+}
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMobileMenu();
+});
+
+// =========================================
+// 3. MOUSE TRACKING
 // =========================================
 let mouseX = window.innerWidth  / 2;
 let mouseY = window.innerHeight / 2;
@@ -41,7 +87,7 @@ window.addEventListener('mousemove', (e) => {
 }, { passive: true });
 
 // =========================================
-// 3. TYPEWRITER 
+// 4. TYPEWRITER 
 // =========================================
 const typingEl = document.querySelector('.typewriter-text');
 if (typingEl) {
@@ -66,7 +112,7 @@ if (typingEl) {
 }
 
 // =========================================
-// 4. DYNAMIC PARTICLE SYSTEM
+// 5. DYNAMIC PARTICLE SYSTEM
 // =========================================
 const canvas = document.getElementById('bg-canvas');
 if (canvas) {
@@ -196,7 +242,7 @@ if (canvas) {
 }
 
 // =========================================
-// 5. COUNTER ANIMATION
+// 6. COUNTER ANIMATION
 // =========================================
 function animateCounter(el) {
     const target = +el.dataset.target;
@@ -219,7 +265,7 @@ if (counters.length) {
 }
 
 // =========================================
-// 6. SKILL BARS
+// 7. SKILL BARS
 // =========================================
 const fills = document.querySelectorAll('.skill-fill');
 if (fills.length) {
@@ -235,7 +281,7 @@ if (fills.length) {
 }
 
 // =========================================
-// 7. SCROLL REVEAL (Fixed: Added .certificate-gallery)
+// 8. SCROLL REVEAL (Fixed: Added .certificate-gallery)
 // =========================================
 const reveals = document.querySelectorAll('.timeline-item, .skill-card, .about-grid, .stats-bar, .empty-state, .contact-info-grid, .contact-form-wrapper, .project-box, .certificate-gallery');
 if (reveals.length) {
@@ -249,7 +295,7 @@ if (reveals.length) {
 }
 
 // =========================================
-// 8. NAV ON SCROLL
+// 9. NAV ON SCROLL
 // =========================================
 const nav = document.querySelector('nav');
 if (nav) {
@@ -261,7 +307,7 @@ if (nav) {
 }
 
 // =========================================
-// 9. PROFILE TINT
+// 10. PROFILE TINT
 // =========================================
 const pImg = document.querySelector('.profile-img');
 if (pImg) {
@@ -273,7 +319,7 @@ if (pImg) {
 }
 
 // =========================================
-// 10. PROJECT MODAL LOGIC
+// 11. PROJECT MODAL LOGIC
 // =========================================
 const projectData = {
     'foursight': {
@@ -338,7 +384,7 @@ window.addEventListener('click', (e) => {
 });
 
 // =========================================
-// 11. CERTIFICATIONS GALLERY LOGIC
+// 12. CERTIFICATIONS GALLERY LOGIC
 // =========================================
 function showCertificate(src, description, thumbnailElement) {
     const mainImage = document.getElementById('main-cert-image');
@@ -362,7 +408,7 @@ function showCertificate(src, description, thumbnailElement) {
 }
 
 // =========================================
-// 12. LENIS BUTTERY SMOOTH SCROLLING
+// 13. LENIS BUTTERY SMOOTH SCROLLING
 // =========================================
 if (typeof Lenis !== 'undefined') {
     const lenis = new Lenis({
