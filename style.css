@@ -313,7 +313,7 @@ nav {
 .hero-role { font-family: var(--font-display); font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--pure); font-style: italic; line-height: 1.5; }
 .hero-role strong { color: var(--steel); font-weight: 700; }
 
-.tech-stack-hero { font-family: var(--font-mono); font-size: 0.8rem; color: var(--silver); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 38px; margin-left: 30px; animation: fadeSlideUp 0.8s ease-out 0.45s both; }
+.hero-subtitle { font-family: var(--font-mono); font-size: 0.8rem; color: var(--silver); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 38px; animation: fadeSlideUp 0.8s ease-out 0.45s both; }
 .typewriter-text { color: var(--off-white); font-weight: 600; }
 .cursor-blink { color: var(--light-gray); animation: blink 1s step-end infinite; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -979,6 +979,37 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 .grace-toast.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
 /* =========================================
+   SKIP-TO-CONTENT LINK
+   Off-screen until focused via keyboard (Tab),
+   then jumps into view above the nav so screen
+   reader and keyboard-only visitors can bypass
+   the nav links and go straight to page content.
+========================================= */
+.skip-link {
+    position: absolute;
+    top: -60px;
+    left: 16px;
+    z-index: 1500;
+    padding: 12px 22px;
+    background: var(--glass-hover);
+    color: var(--gold-bright);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(212,160,23,0.35);
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    transition: top var(--t-fast);
+}
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid var(--moonlight);
+    outline-offset: 2px;
+}
+
+/* =========================================
    ACCESSIBLE FOCUS STATES
    Keyboard users get a visible, on-theme
    focus ring instead of the browser default
@@ -1039,7 +1070,7 @@ button:focus-visible,
 @media print {
     .bg-overlay, .blood-moon, .moon-glow, .fog-layer, .vignette,
     #bg-canvas, .gothic-border, nav, .mobile-menu-overlay,
-    .scroll-top-btn, .form-toast, .grace-toast, .scroll-indicator {
+    .scroll-top-btn, .form-toast, .grace-toast, .scroll-indicator, .skip-link {
         display: none !important;
     }
     body { background: #fff; color: #111; }
