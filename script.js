@@ -142,11 +142,11 @@ const typingEl = document.querySelector('.typewriter-text');
 if (typingEl) {
     const phrases = [
         'Computer Engineering Student',
-        'Senior Software Engineer',
-        'Software Architect',
-        'Backend Systems Engineer',
-        'Scalable Architecture Designer',
-        'Clean Code Advocate'
+        'Embedded Systems Engineer',
+        'Firmware Developer',
+        'Hardware-Software Integrator',
+        'IoT Systems Designer',
+        'Microcontroller Tinkerer'
     ];
     let pIdx = 0, cIdx = 0, del = false;
 
