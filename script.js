@@ -452,6 +452,13 @@ const projectData = {
         techStack: ["PHP", "MySQLi", "HTML5 & CSS3", "Full-Stack Web"],
         image: "Final%20kapeinato%202.png", 
         sourceCode: "https://drive.google.com/drive/u/1/folders/1C8-FlzOtFIf42h5cdC_Se1Aa4Qq9IAmN"
+    },
+    'hx1rover': {
+        title: "HX-1 Rover — Autonomous Robot",
+        description: `The HX-1 Rover is a multi-mode autonomous robot system built on an ESP32 microcontroller, designed to operate as a Sumobot, a Human Following robot, an Obstacle Avoidance robot, and a Maze Solver — all selectable from a single smartphone web interface over Wi-Fi.\n\nThe rover is equipped with a 4-DOF robotic arm for manipulation tasks, a live dual webcam feed for real-time visual monitoring, and an array of ultrasonic and IR sensors for navigation and obstacle detection. Networking is bridged through an Orange Pi running a Java WebSocket server, which relays commands and sensor/video data between the ESP32 firmware and the web-based control interface.\n\nThis project ties together embedded firmware development, real-time sensor fusion, wireless control architecture, and cross-device communication — a direct application of hardware-software integration skills.`,
+        techStack: ["ESP32", "Embedded C++", "Java WebSocket Server", "Orange Pi", "Wi-Fi Control", "Robotics"],
+        image: "HX-1%20Rover.png",
+        sourceCode: "https://drive.google.com/drive/u/1/folders/19hZF6zZ40hAZUpW-CRD1xhgD6UCs4jMA"
     }
 };
 
@@ -479,6 +486,8 @@ function openModal(projectId) {
             </div>
         `;
         modal.classList.add('reveal-visible');
+        modal.scrollTop = 0;
+        document.body.style.overflow = 'hidden';
     }
 }
 
@@ -491,12 +500,16 @@ document.addEventListener('click', (e) => {
 });
 
 if (closeModal) {
-    closeModal.addEventListener('click', () => modal.classList.remove('reveal-visible'));
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('reveal-visible');
+        document.body.style.overflow = '';
+    });
 }
 
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.classList.remove('reveal-visible');
+        document.body.style.overflow = '';
     }
 });
 
@@ -868,6 +881,7 @@ function triggerThemePulse() {
 
     function closeAndReturnFocus() {
         modalEl.classList.remove('reveal-visible');
+        document.body.style.overflow = '';
         if (lastTrigger) lastTrigger.focus();
     }
 
