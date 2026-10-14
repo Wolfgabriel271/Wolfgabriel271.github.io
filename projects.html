@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jazen Gabriel | Projects</title>
-    <meta name="description" content="Software projects by Jazen Gabriel M. Digamon, including a C-based car rental management system and a full-stack PHP/MySQLi cafe ordering platform.">
-    <meta name="theme-color" content="#0E0C0A">
+    <meta name="description" content="Projects by Jazen Gabriel M. Digamon: an ESP32 multi-mode autonomous rover (HX-1), a C-based car rental management system, and a full-stack PHP/MySQLi cafe ordering platform.">
+    <meta name="theme-color" content="#07090D">
+    <meta name="color-scheme" content="dark light">
     <meta property="og:title" content="Jazen Gabriel | My Works">
     <meta property="og:description" content="A look at the systems and applications I've built, from console programs to full-stack web platforms.">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 
     <script>
-        if (localStorage.getItem('portfolio-theme') === 'dark') {
+        try {
+            if (localStorage.getItem('portfolio-theme') !== 'light') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) {
             document.documentElement.classList.add('dark-mode');
         }
     </script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -35,7 +40,7 @@
     <div class="gothic-border top-border"></div>
     <div class="gothic-border bottom-border"></div>
 
-    <nav>
+    <nav aria-label="Main navigation">
         <div class="nav-rune left-rune">✦</div>
         <a href="index.html" class="logo">
             <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
@@ -131,9 +136,9 @@
         </div>
     </main>
 
-    <div class="modal-overlay" id="project-modal">
+    <div class="modal-overlay" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-heading" data-lenis-prevent>
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
+            <button type="button" class="close-modal" aria-label="Close project details">&times;</button>
             <div id="modal-body">
                 </div>
         </div>

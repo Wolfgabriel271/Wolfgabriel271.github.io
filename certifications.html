@@ -17,7 +17,7 @@
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
     <link
@@ -27,11 +27,15 @@
     <link rel="stylesheet" href="style.css" />
 
     <script>
-      if (localStorage.getItem("portfolio-theme") === "dark") {
-        document.documentElement.classList.add("dark-mode");
-      }
+      try {
+            if (localStorage.getItem('portfolio-theme') !== 'light') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) {
+            document.documentElement.classList.add('dark-mode');
+        }
     </script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js" defer></script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -47,7 +51,7 @@
     <div class="gothic-border top-border"></div>
     <div class="gothic-border bottom-border"></div>
 
-    <nav>
+    <nav aria-label="Main navigation">
       <div class="nav-rune left-rune">✦</div>
       <a href="index.html" class="logo">
         <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post">
@@ -95,7 +99,7 @@
           <img
             id="main-cert-image"
             src="Certificate 1.jpg"
-            alt="Active Certification"
+            alt="Code to Connect: Programming Languages and Databases 101 certificate"
             loading="eager"
             decoding="async"
           />
@@ -118,7 +122,7 @@
           >
             <img
               src="Certificate 1.jpg"
-              alt="Cert 1"
+              alt="Code to Connect: Programming Languages and Databases 101 certificate"
               loading="lazy"
               decoding="async"
             />
@@ -136,7 +140,7 @@
             <!-- Cert 2 set to .png -->
             <img
               src="Certificate 2.png"
-              alt="Cert 2"
+              alt="Low-Level Control: Programming Arduino Using Assembly Language certificate"
               loading="lazy"
               decoding="async"
             />
@@ -154,7 +158,7 @@
             <!-- Cert 3 set to .png -->
             <img
               src="Certificate 3.png"
-              alt="Cert 3"
+              alt="COMPFEST 2026 certificate"
               loading="lazy"
               decoding="async"
             />
@@ -172,7 +176,7 @@
             <!-- Cert 4 set to .png -->
             <img
               src="Certificate 4.png"
-              alt="Cert 4"
+              alt="ROBOSEUM certificate"
               loading="lazy"
               decoding="async"
             />
@@ -189,7 +193,7 @@
           >
             <img
               src="Certificate 5.png"
-              alt="Cert 5"
+              alt="Think Before You Build, Session 2 certificate"
               loading="lazy"
               decoding="async"
             />
@@ -206,7 +210,7 @@
           >
             <img
               src="Certificate 6.png"
-              alt="Cert 6"
+              alt="Think Before You Build, Session 3 certificate"
               loading="lazy"
               decoding="async"
             />
@@ -223,7 +227,7 @@
           >
             <img
               src="Certificate 7.png"
-              alt="Cert 7"
+              alt="Think Before You Build, Session 4 certificate"
               loading="lazy"
               decoding="async"
             />

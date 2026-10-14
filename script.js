@@ -23,8 +23,10 @@
     18. Theme-Toggle Visual Pulse
     19. Image Fade-In On Load (project/cert/profile photos)
     20. Certifications Gallery Keyboard Nav + Live Region
-    21. Project Modal — Escape Key + Focus Return
+    21. (merged into 11 — modal Escape / focus return / focus trap)
     22. Copy-To-Clipboard On Contact Details
+    23. Keyboard Shortcuts
+    24. Social Icon Accessible Names
 
    Performance & accessibility notes:
     - Every animation loop is paused while the
@@ -54,28 +56,38 @@ document.addEventListener('visibilitychange', () => {
 // =========================================
 const themeBtn = document.getElementById('theme-toggle');
 const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+const rootElement = document.documentElement;
+
+function syncThemeButton() {
+    const isDark = rootElement.classList.contains('dark-mode');
+    if (themeIcon) {
+        themeIcon.classList.toggle('fa-sun', isDark);
+        themeIcon.classList.toggle('fa-moon', !isDark);
+    }
+    if (themeBtn) {
+        themeBtn.setAttribute('aria-pressed', String(isDark));
+        themeBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        themeBtn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+}
+
+// Match the saved theme on every page, including when storage is unavailable.
+try {
+    rootElement.classList.toggle('dark-mode', localStorage.getItem('portfolio-theme') !== 'light');
+} catch (e) {
+    rootElement.classList.add('dark-mode');
+}
+syncThemeButton();
 
 if (themeBtn) {
     themeBtn.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark-mode');
-        const isDark = document.documentElement.classList.contains('dark-mode');
-        
-        if (isDark) {
-            localStorage.setItem('portfolio-theme', 'dark');
-            if(themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-            localStorage.setItem('portfolio-theme', 'light');
-            if(themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
-        }
-
-        // Section 18 — give the moon a brief celebratory glow burst
-        // on every theme switch instead of an abrupt color snap.
-        triggerThemePulse();
+        const isDark = !rootElement.classList.contains('dark-mode');
+        rootElement.classList.toggle('dark-mode', isDark);
+        try { localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light'); } catch (e) { /* Theme still switches for this page. */ }
+        syncThemeButton();
+        // Brief glow pulse on every theme switch.
+        if (typeof triggerThemePulse === 'function') triggerThemePulse();
     });
-}
-
-if (themeIcon && document.documentElement.classList.contains('dark-mode')) {
-    themeIcon.classList.replace('fa-moon', 'fa-sun');
 }
 
 // =========================================
@@ -85,20 +97,30 @@ const hamburgerBtn   = document.getElementById('hamburger-btn');
 const navLinks       = document.querySelector('.nav-links');
 const menuOverlay    = document.getElementById('mobile-menu-overlay');
 
+// Shared by the mobile menu and the project modal. Lenis keeps scrolling
+// the page under `body { overflow: hidden }`, so it has to be stopped too.
+function setScrollLocked(locked) {
+    document.body.style.overflow = locked ? 'hidden' : '';
+    if (window.__lenis) { locked ? window.__lenis.stop() : window.__lenis.start(); }
+}
+
 function openMobileMenu() {
+    if (!hamburgerBtn || !navLinks || !menuOverlay) return;
     hamburgerBtn.classList.add('open');
     navLinks.classList.add('open');
     menuOverlay.classList.add('active');
     hamburgerBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
+    setScrollLocked(true);
 }
 
 function closeMobileMenu() {
+    // No-op when already closed, so Escape / link clicks can't unlock scroll under an open modal.
+    if (!hamburgerBtn || !navLinks || !menuOverlay || !navLinks.classList.contains('open')) return;
     hamburgerBtn.classList.remove('open');
     navLinks.classList.remove('open');
     menuOverlay.classList.remove('active');
     hamburgerBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+    setScrollLocked(false);
 }
 
 if (hamburgerBtn) {
@@ -141,16 +163,20 @@ window.addEventListener('mousemove', (e) => {
 const typingEl = document.querySelector('.typewriter-text');
 if (typingEl) {
     const phrases = [
-        'Computer Engineering Student',
-        'Embedded Systems Engineer',
-        'Firmware Developer',
-        'Hardware-Software Integrator',
-        'IoT Systems Designer',
-        'Microcontroller Tinkerer'
+        'Aspiring Senior Software Engineer',
+        'Software Engineer',
+        'Full-Stack Developer',
+        'Backend Software Engineer',
+        'Frontend Developer',
+        'Application Software Developer',
+        'Software Development Engineer',
+        'API Developer',
+        'Cloud Software Engineer',
+        'DevOps Engineer'
     ];
     let pIdx = 0, cIdx = 0, del = false;
 
-    (function step() {
+    if (prefersReducedMotion) { typingEl.textContent = phrases[0]; } else (function step() {
         const p = phrases[pIdx];
         typingEl.textContent = del ? p.slice(0, cIdx - 1) : p.slice(0, cIdx + 1);
         del ? cIdx-- : cIdx++;
@@ -280,7 +306,7 @@ if (canvas) {
             const tw = Math.sin(ts * stws[i] + stwo[i]) * 0.2 + 0.8;
             const dx = mouseX - sx[i], dy = mouseY - sy[i];
             const d2 = dx * dx + dy * dy;
-            if (d2 < 10000) {
+            if (d2 < 10000 && d2 > 0.0001) {
                 const d = Math.sqrt(d2);
                 const f = (100 - d) / 100;
                 sx[i] -= dx / d * f * sden[i] * 0.3;
@@ -360,6 +386,7 @@ if (canvas) {
 // =========================================
 function animateCounter(el) {
     const target = +el.dataset.target;
+    if (prefersReducedMotion) { el.textContent = target; return; }
     const t0     = performance.now();
     const dur    = 1800;
     (function tick(now) {
@@ -465,57 +492,69 @@ const projectData = {
 const modal = document.getElementById('project-modal');
 const modalBody = document.getElementById('modal-body');
 const closeModal = document.querySelector('.close-modal');
+let modalTrigger = null;
 
-function openModal(projectId) {
+function openModal(projectId, trigger) {
     const data = projectData[projectId];
-    if (data && modalBody) {
-        modalBody.innerHTML = `
-            <h2 class="modal-title">${data.title}</h2>
-            <img src="${data.image}" alt="${data.title}" class="modal-img">
-            <div class="modal-tech-stack">
-                ${data.techStack.map(tech => `<span class="badge">${tech}</span>`).join('')}
-            </div>
-            <div class="modal-desc">
-                ${data.description.split('\n').map(para => `<p>${para}</p>`).join('')}
-            </div>
-            <div class="modal-cta-group">
-                <a href="${data.sourceCode}" target="_blank" rel="noopener" class="btn-primary">
-                    <span class="btn-glow"></span>
-                    <i class="fa-solid fa-folder-open"></i> Access Drive Source
-                </a>
-            </div>
-        `;
-        modal.classList.add('reveal-visible');
-        modal.scrollTop = 0;
-        document.body.style.overflow = 'hidden';
-    }
+    if (!data || !modal || !modalBody) return;
+    modalBody.innerHTML = `
+        <h2 class="modal-title" id="modal-title-heading">${data.title}</h2>
+        <img src="${data.image}" alt="${data.title}" class="modal-image">
+        <div class="modal-tech-stack">
+            ${data.techStack.map(tech => `<span class="badge">${tech}</span>`).join('')}
+        </div>
+        <div class="modal-desc">
+            ${data.description.split('\n').map(para => para.trim() ? `<p>${para}</p>` : '').join('')}
+        </div>
+        <div class="modal-cta">
+            <a href="${data.sourceCode}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <span class="btn-glow"></span>
+                <i class="fa-solid fa-folder-open"></i> Access Drive Source
+            </a>
+        </div>
+    `;
+    modalTrigger = trigger || null;
+    modal.classList.add('reveal-visible');
+    modal.scrollTop = 0;
+    setScrollLocked(true);
+    if (closeModal) closeModal.focus({ preventScroll: true });
+}
+
+function closeProjectModal() {
+    if (!modal || !modal.classList.contains('reveal-visible')) return;
+    modal.classList.remove('reveal-visible');
+    setScrollLocked(false);
+    if (modalTrigger) { modalTrigger.focus({ preventScroll: true }); modalTrigger = null; }
 }
 
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('.view-details-btn');
-    if (btn) {
-        const projectId = btn.getAttribute('data-project');
-        openModal(projectId);
-    }
+    if (btn) openModal(btn.getAttribute('data-project'), btn);
 });
 
-if (closeModal) {
-    closeModal.addEventListener('click', () => {
-        modal.classList.remove('reveal-visible');
-        document.body.style.overflow = '';
+if (modal) {
+    if (closeModal) closeModal.addEventListener('click', closeProjectModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeProjectModal(); });
+
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('reveal-visible')) return;
+        if (e.key === 'Escape') { closeProjectModal(); return; }
+        if (e.key === 'Tab') {
+            // Keep keyboard focus inside the dialog while it is open.
+            const focusable = modal.querySelectorAll('a[href], button:not([disabled])');
+            if (!focusable.length) return;
+            const first = focusable[0], last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            else if (!modal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        }
     });
 }
-
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.classList.remove('reveal-visible');
-        document.body.style.overflow = '';
-    }
-});
 
 // =========================================
 // 12. CERTIFICATIONS GALLERY LOGIC
 // =========================================
+let certSwapTimer = null;
 function showCertificate(src, description, thumbnailElement) {
     const mainImage = document.getElementById('main-cert-image');
     const displayBox = document.getElementById('display-box');
@@ -524,17 +563,20 @@ function showCertificate(src, description, thumbnailElement) {
     if (!mainImage || !displayBox || !descElement) return;
 
     displayBox.classList.add('loading');
-    
-    setTimeout(() => {
+    clearTimeout(certSwapTimer);
+
+    certSwapTimer = setTimeout(() => {
+        const reveal = () => displayBox.classList.remove('loading');
+        mainImage.onload = reveal;
+        mainImage.onerror = reveal;
         mainImage.src = src;
+        mainImage.alt = description;
         descElement.textContent = description;
-        displayBox.classList.remove('loading');
+        if (mainImage.complete) reveal();
     }, 300);
 
-    document.querySelectorAll('.cert-thumb').forEach(thumb => {
-        thumb.classList.remove('active');
-    });
-    thumbnailElement.classList.add('active');
+    document.querySelectorAll('.cert-thumb').forEach(thumb => thumb.classList.remove('active'));
+    if (thumbnailElement) thumbnailElement.classList.add('active');
 }
 
 // =========================================
@@ -550,9 +592,9 @@ if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
         direction: 'vertical',
         gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false, 
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        syncTouch: false, 
         touchMultiplier: 2,
         infinite: false,
     });
@@ -627,6 +669,12 @@ if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
     const form = document.querySelector('.contact-form-wrapper form');
     if (!form) return; // not the contact page
 
+    // Paste your Formspree endpoint here (https://formspree.io/f/xxxxxxx)
+    // to send messages in the background. Leave '' to open the visitor's
+    // email client with the message pre-filled instead.
+    const FORM_ENDPOINT = '';
+    const CONTACT_EMAIL = 'jazdigamon12@gmail.com';
+
     let toastEl = document.querySelector('.form-toast');
     if (!toastEl) {
         toastEl = document.createElement('div');
@@ -635,7 +683,8 @@ if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
         document.body.appendChild(toastEl);
     }
     let toastTimer = null;
-    function showToast() {
+    function showToast(msg) {
+        if (msg) toastEl.querySelector('span').textContent = msg;
         toastEl.classList.add('visible');
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => toastEl.classList.remove('visible'), 3600);
@@ -648,10 +697,13 @@ if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
         field.addEventListener('animationend', () => field.classList.remove('field-invalid'), { once: true });
     }
 
+    form.addEventListener('input', (e) => { if (e.target.removeAttribute) e.target.removeAttribute('aria-invalid'); });
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const fields = Array.from(form.querySelectorAll('.form-control'));
         let allValid = true;
+        let firstInvalid = null;
 
         fields.forEach((field) => {
             const value = field.value.trim();
@@ -659,12 +711,29 @@ if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
             const valid = value.length > 0 && (!isEmail || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
             if (!valid) {
                 allValid = false;
+                if (!firstInvalid) firstInvalid = field;
+                field.setAttribute('aria-invalid', 'true');
                 shakeField(field);
+            } else {
+                field.removeAttribute('aria-invalid');
             }
         });
 
-        if (allValid) {
-            showToast();
+        if (!allValid) {
+            firstInvalid.focus();
+            showToast('Please fill in every field (with a valid email).');
+            return;
+        }
+
+        const data = new FormData(form);
+        if (FORM_ENDPOINT) {
+            fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+                .then((r) => { if (!r.ok) throw new Error('send failed'); showToast('Message sent. Thank you!'); form.reset(); })
+                .catch(() => showToast('Could not send. Please email me directly.'));
+        } else {
+            const body = `${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`;
+            window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(data.get('subject'))}&body=${encodeURIComponent(body)}`;
+            showToast('Message ready — your email client will open shortly.');
             form.reset();
         }
     });
@@ -739,7 +808,8 @@ if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
 
     document.addEventListener('keydown', (e) => {
         const tag = (e.target && e.target.tagName) || '';
-        if (tag === 'INPUT' || tag === 'TEXTAREA') return; // don't fire while typing in the contact form
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.target.isContentEditable) return;
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
         if (e.key.length !== 1) return;
         buffer = (buffer + e.key.toLowerCase()).slice(-target.length);
         if (buffer === target) {
@@ -816,7 +886,8 @@ function triggerThemePulse() {
     thumbs.forEach((thumb, i) => {
         thumb.setAttribute('tabindex', '0');
         thumb.setAttribute('role', 'button');
-        thumb.setAttribute('aria-label', `View certificate ${i + 1}`);
+        const img = thumb.querySelector('img');
+        thumb.setAttribute('aria-label', `View certificate: ${(img && img.alt) || (i + 1)}`);
     });
 
     let liveRegion = document.getElementById('cert-live-region');
@@ -860,40 +931,11 @@ function triggerThemePulse() {
 })();
 
 // =========================================
-// 21. PROJECT MODAL — ESCAPE KEY + FOCUS RETURN
-//     The modal already closes on overlay
-//     click and the × button. This adds the
-//     Escape key, and — just as important for
-//     keyboard users — returns focus to
-//     whichever "+" button opened the modal,
-//     instead of leaving focus stranded.
+// 21. (Merged into section 11)
+//     Escape key, focus return and the focus
+//     trap now live next to openModal() so
+//     there is a single close path.
 // =========================================
-(function enhanceProjectModal() {
-    const modalEl = document.getElementById('project-modal');
-    if (!modalEl) return; // not the projects page
-
-    let lastTrigger = null;
-
-    document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.view-details-btn');
-        if (btn) lastTrigger = btn;
-    });
-
-    function closeAndReturnFocus() {
-        modalEl.classList.remove('reveal-visible');
-        document.body.style.overflow = '';
-        if (lastTrigger) lastTrigger.focus();
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modalEl.classList.contains('reveal-visible')) {
-            closeAndReturnFocus();
-        }
-    });
-
-    const closeBtn = modalEl.querySelector('.close-modal');
-    if (closeBtn) closeBtn.addEventListener('click', () => { lastTrigger && lastTrigger.focus(); });
-})();
 
 // =========================================
 // 22. COPY-TO-CLIPBOARD ON CONTACT DETAILS
@@ -929,17 +971,24 @@ function triggerThemePulse() {
         const looksCopyable = text.includes('@') || /\d{7,}/.test(text);
         if (!looksCopyable) return;
 
-        p.style.cursor = 'pointer';
-        p.title = 'Click to copy';
-        p.addEventListener('click', async () => {
+        const copy = async () => {
             try {
                 await navigator.clipboard.writeText(text);
                 flashToast('Copied to clipboard.');
             } catch (err) {
-                // Clipboard API can fail without HTTPS/permissions — fail quietly,
-                // the text is still visible and selectable manually.
-                console.warn('Clipboard copy failed:', err);
+                // Clipboard API needs HTTPS / permission.
+                flashToast('Could not copy. Please select the text manually.');
             }
+        };
+
+        p.style.cursor = 'pointer';
+        p.title = 'Click to copy';
+        p.tabIndex = 0;
+        p.setAttribute('role', 'button');
+        p.setAttribute('aria-label', `Copy ${text}`);
+        p.addEventListener('click', copy);
+        p.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copy(); }
         });
     });
 })();
@@ -956,7 +1005,8 @@ function triggerThemePulse() {
 (function setupKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
         const tag = (e.target && e.target.tagName) || '';
-        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.target.isContentEditable) return;
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         if (e.key === 'Home') {
             e.preventDefault();
@@ -968,6 +1018,20 @@ function triggerThemePulse() {
         if ((e.key === 't' || e.key === 'T') && themeBtn) {
             themeBtn.click();
         }
+    });
+})();
+
+// =========================================
+// 24. SOCIAL ICON ACCESSIBLE NAMES
+//     Icon-only links get an aria-label so screen
+//     readers announce "GitHub" instead of nothing.
+// =========================================
+(function labelSocialIcons() {
+    const names = { 'github.com': 'GitHub', 'facebook.com': 'Facebook', 'instagram.com': 'Instagram', 'x.com': 'X (Twitter)', 'tiktok.com': 'TikTok' };
+    document.querySelectorAll('a.social-icon').forEach((a) => {
+        if (a.getAttribute('aria-label')) return;
+        const host = a.hostname.replace(/^www\./, '');
+        a.setAttribute('aria-label', a.dataset.tooltip || names[host] || host);
     });
 })();
 
@@ -1016,3 +1080,142 @@ function triggerThemePulse() {
 // all well-supported in current Chrome, Firefox, Safari, and Edge.
 // No transpilation/polyfills are included by design, to keep this
 // a zero-build static site.
+
+/* ============================================================
+   CYBERPUNK RESPONSIVE + MOTION UPGRADE
+   Progressive enhancement; the site remains usable if JS fails.
+   ============================================================ */
+(function cyberpunkEnhancements() {
+  'use strict';
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('page-ready');
+
+  // Animate content as it enters view; reveal immediately if unsupported/reduced motion.
+  const revealTargets = document.querySelectorAll(
+    '.section-heading, .section-label, .about-bio, .info-item, .skill-card, .timeline-item, .project-box, .contact-card, .contact-form-wrapper, .cert-display, .resume-section, .stats-bar .stat-item'
+  );
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
+    revealTargets.forEach((el, i) => {
+      if (el.closest('.hero')) return;
+      el.classList.add('js-reveal');
+      el.style.transitionDelay = `${Math.min(i % 5, 4) * 45}ms`;
+      observer.observe(el);
+    });
+  } else {
+    revealTargets.forEach(el => el.classList.add('is-visible'));
+  }
+
+  // Close the mobile drawer when switching to desktop width, and keep aria state accurate.
+  const menu = document.querySelector('.nav-links');
+  const toggle = document.getElementById('hamburger-btn');
+  const overlay = document.getElementById('mobile-menu-overlay');
+  function closeDrawer() {
+    if (!menu || !toggle || !menu.classList.contains('open')) return;
+    menu.classList.remove('open');
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    if (overlay) overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    if (window.__lenis && typeof window.__lenis.start === 'function') window.__lenis.start();
+  }
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) closeDrawer(); }, { passive: true });
+  if (menu && toggle) {
+    toggle.setAttribute('aria-controls', 'primary-navigation');
+    menu.id = menu.id || 'primary-navigation';
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      if (window.innerWidth <= 900) closeDrawer();
+    }));
+  }
+
+  // Small parallax on desktop only; no pointer tracking on touch devices.
+  if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      let raf = 0;
+      hero.addEventListener('pointermove', event => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const rect = hero.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / Math.max(rect.width, 1) - .5;
+          const y = (event.clientY - rect.top) / Math.max(rect.height, 1) - .5;
+          hero.style.setProperty('--pointer-x', `${x * 8}px`);
+          hero.style.setProperty('--pointer-y', `${y * 6}px`);
+          raf = 0;
+        });
+      }, { passive: true });
+      hero.addEventListener('pointerleave', () => {
+        hero.style.setProperty('--pointer-x', '0px');
+        hero.style.setProperty('--pointer-y', '0px');
+      }, { passive: true });
+    }
+  }
+})();
+
+
+/* ============================================================
+   IMMERSIVE CYBERPUNK DETAILS
+   Lightweight enhancements: reading progress, local clock/status HUD,
+   and a subtle pointer glow on desktop. No external libraries required.
+   ============================================================ */
+(function immersiveInterface() {
+  'use strict';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reading progress line gives long pages a subtle, useful sense of movement.
+  const progress = document.createElement('div');
+  progress.id = 'cyber-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(progress);
+  let scrollTicking = false;
+  function updateProgress() {
+    const doc = document.documentElement;
+    const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+    progress.style.width = `${Math.min(100, Math.max(0, (window.scrollY / max) * 100))}%`;
+    scrollTicking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(updateProgress); }
+  }, { passive: true });
+  window.addEventListener('resize', updateProgress, { passive: true });
+  updateProgress();
+
+  // Tiny status HUD with the visitor's own local time (no location tracking).
+  const hud = document.createElement('aside');
+  hud.id = 'cyber-hud';
+  hud.setAttribute('aria-label', 'Interface status and local time');
+  hud.innerHTML = '<span class="hud-dot" aria-hidden="true"></span><span>SYS ONLINE</span><span aria-hidden="true">/</span><time class="hud-clock" id="cyber-clock"></time>';
+  document.body.appendChild(hud);
+  const clock = hud.querySelector('#cyber-clock');
+  function updateClock() {
+    if (!clock) return;
+    clock.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date());
+  }
+  updateClock();
+  window.setInterval(updateClock, 30000);
+
+  // Soft cursor light only on mouse/trackpad devices; disabled on touch and reduced motion.
+  if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const glow = document.createElement('div');
+    glow.className = 'cyber-pointer-glow';
+    glow.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(glow);
+    let raf = 0, x = -400, y = -400;
+    window.addEventListener('pointermove', event => {
+      x = event.clientX; y = event.clientY;
+      if (!raf) raf = requestAnimationFrame(() => {
+        glow.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+        raf = 0;
+      });
+    }, { passive: true });
+    document.addEventListener('pointerleave', () => { glow.style.opacity = '0'; });
+    document.addEventListener('pointerenter', () => { glow.style.opacity = ''; });
+  }
+})();

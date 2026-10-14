@@ -5,21 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jazen Gabriel | Contact</title>
     <meta name="description" content="Get in touch with Jazen Gabriel M. Digamon via email, phone, or social media for collaborations, opportunities, or questions.">
-    <meta name="theme-color" content="#0E0C0A">
+    <meta name="theme-color" content="#07090D">
+    <meta name="color-scheme" content="dark light">
     <meta property="og:title" content="Jazen Gabriel | Contact">
     <meta property="og:description" content="Reach out for collaborations, opportunities, or just to say hello.">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 
     <script>
-        if (localStorage.getItem('portfolio-theme') === 'dark') {
+        try {
+            if (localStorage.getItem('portfolio-theme') !== 'light') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) {
             document.documentElement.classList.add('dark-mode');
         }
     </script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -35,7 +40,7 @@
     <div class="gothic-border top-border"></div>
     <div class="gothic-border bottom-border"></div>
 
-    <nav>
+    <nav aria-label="Main navigation">
         <div class="nav-rune left-rune">✦</div>
         <a href="index.html" class="logo">
             <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
@@ -86,11 +91,11 @@
                     <div class="contact-details">
                         <h4>Social Profiles</h4>
                         <div class="contact-socials">
-                            <a href="https://github.com/Wolfgabriel271" target="_blank" class="social-icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="https://www.facebook.com/Charlie.Morningstar.27" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://www.instagram.com/stellar_normad/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-                            <a href="https://x.com/Iamjazengabriel" target="_blank" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="https://www.tiktok.com/@charliemorningstar2467" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                            <a href="https://github.com/Wolfgabriel271" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="https://www.facebook.com/Charlie.Morningstar.27" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/stellar_normad/" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="https://x.com/Iamjazengabriel" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="https://www.tiktok.com/@charliemorningstar2467" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-tiktok"></i></a>
                         </div>
                     </div>
                 </div>
@@ -113,20 +118,24 @@
             </div>
 
             <div class="contact-form-wrapper">
-                <form action="#" method="POST">
+                <form action="#" method="POST" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Name" required>
+                            <input type="text" class="form-control" placeholder="Your Name" name="name" autocomplete="name" aria-label="Your name" required>
+                            <span class="form-line"></span>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
+                            <input type="email" class="form-control" placeholder="Your Email" name="email" autocomplete="email" aria-label="Your email" required>
+                            <span class="form-line"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Subject" required>
+                        <input type="text" class="form-control" placeholder="Subject" name="subject" aria-label="Subject" required>
+                        <span class="form-line"></span>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" placeholder="Message" required></textarea>
+                        <textarea class="form-control" placeholder="Message" name="message" aria-label="Message" required></textarea>
+                        <span class="form-line"></span>
                     </div>
                     <button type="submit" class="btn-primary">
                         <span class="btn-glow"></span>

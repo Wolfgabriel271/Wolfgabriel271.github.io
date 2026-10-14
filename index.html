@@ -4,26 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jazen Gabriel | Home</title>
-    <meta name="description" content="Jazen Gabriel M. Digamon — Computer Engineering student at the University of Bohol and aspiring Embedded Systems Engineer. Explore my projects, resume, and certifications.">
-    <meta name="theme-color" content="#0E0C0A">
-    <meta property="og:title" content="Jazen Gabriel | Computer Engineering Student & Aspiring Embedded Systems Engineer">
-    <meta property="og:description" content="Portfolio of Jazen Gabriel M. Digamon — BSCpE student building hardware-software systems with C++, embedded C, and full-stack tools.">
+    <meta name="description" content="Jazen Gabriel M. Digamon — Computer Engineering student at the University of Bohol aspiring to become a Senior Software Engineer. Explore my projects, technical skills, resume, and certifications.">
+    <meta name="theme-color" content="#07090D">
+    <meta name="color-scheme" content="dark light">
+    <meta property="og:title" content="Jazen Gabriel | Aspiring Senior Software Engineer">
+    <meta property="og:description" content="Portfolio of Jazen Gabriel M. Digamon — BSCpE student developing programming, problem-solving, web development, and software engineering skills.">
     <meta property="og:type" content="website">
 
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     
     <script>
-        if (localStorage.getItem('portfolio-theme') === 'dark') {
+        try {
+            if (localStorage.getItem('portfolio-theme') !== 'light') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) {
             document.documentElement.classList.add('dark-mode');
         }
     </script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -40,7 +45,7 @@
     <div class="gothic-border top-border"></div>
     <div class="gothic-border bottom-border"></div>
 
-    <nav>
+    <nav aria-label="Main navigation">
         <div class="nav-rune left-rune">✦</div>
         <a href="index.html" class="logo">
             <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
@@ -84,9 +89,9 @@
             <div class="role-ornament flipped">❧</div>
         </div>
 
-        <p class="hero-subtitle">Bridging hardware & firmware · Embedded systems enthusiast · Circuits-to-code builder</p>
+        <p class="hero-subtitle">Aspiring Senior Software Engineer · Software Developer · Building reliable, user-focused software</p>
 
-        <p class="hero-tagline">"Hardware gives a system its body. Firmware gives it a mind.<br>I build the bridge between the two."</p>
+        <p class="hero-tagline">"My goal is to grow into a senior engineer by solving meaningful problems, writing dependable software, and learning with every project."</p>
 
         <div class="social-links">
             <a href="https://github.com/Wolfgabriel271" target="_blank" rel="noopener" class="social-icon" data-tooltip="GitHub">
@@ -135,18 +140,18 @@
         </div>
         <div class="stat-divider">✦</div>
         <div class="stat-item">
-            <span class="stat-number" data-target="2">0</span>+
+            <span class="stat-number" data-target="2" data-suffix="+">0</span>
             <span class="stat-label">Years Coding</span>
         </div>
         <div class="stat-divider">✦</div>
         <div class="stat-item">
-            <span class="stat-number" data-target="3">0</span>+
+            <span class="stat-number" data-target="3" data-suffix="+">0</span>
             <span class="stat-label">Projects Built</span>
         </div>
         <div class="stat-divider">✦</div>
         <div class="stat-item">
             <span class="stat-number" data-target="1">0</span>
-            <span class="stat-label">Dream: Embedded Systems Engineer</span>
+            <span class="stat-label">Long-Term Goal: Senior Software Engineer</span>
         </div>
     </section>
 

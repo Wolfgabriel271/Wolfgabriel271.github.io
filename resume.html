@@ -5,23 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jazen Gabriel | Resume</title>
     <meta name="description" content="Resume of Jazen Gabriel M. Digamon — BS Computer Engineering student at the University of Bohol, skilled in C++, embedded C, digital electronics, and full-stack web development.">
-    <meta name="theme-color" content="#0E0C0A">
+    <meta name="theme-color" content="#07090D">
+    <meta name="color-scheme" content="dark light">
     <meta property="og:title" content="Jazen Gabriel | Resume">
     <meta property="og:description" content="Education, technical skills, and embedded systems competencies of a BSCpE student.">
     <meta property="og:type" content="profile">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 
     <script>
-        if (localStorage.getItem('portfolio-theme') === 'dark') {
+        try {
+            if (localStorage.getItem('portfolio-theme') !== 'light') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) {
             document.documentElement.classList.add('dark-mode');
         }
     </script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -38,7 +43,7 @@
     <div class="gothic-border top-border"></div>
     <div class="gothic-border bottom-border"></div>
 
-    <nav>
+    <nav aria-label="Main navigation">
         <div class="nav-rune left-rune">✦</div>
         <a href="index.html" class="logo">
             <span class="logo-pre">— </span>JAZEN GABRIEL<span class="logo-post"> —</span>
@@ -84,7 +89,7 @@
                     </div>
                     <div class="timeline-content">
                         <h3 class="timeline-title">DIGAMON, JAZEN GABRIEL M.</h3>
-                        <p class="timeline-subtitle">A dedicated student of Computer Engineering specializing in embedded systems design, microcontroller programming, and hardware-software integration.</p>
+                        <p class="timeline-subtitle">A Computer Engineering student building a foundation in software development, problem-solving, data structures, algorithms, and full-stack application development, with a long-term goal of becoming a Senior Software Engineer.</p>
                         <ul class="timeline-list">
                             <li><i class="fa-solid fa-calendar-days"></i> Born: January 29, 2007</li>
                             <li><i class="fa-solid fa-user"></i> 19 Years Old</li>
@@ -139,7 +144,7 @@
 
         <div class="resume-section">
             <h2 class="resume-section-title">
-                <span class="section-rune">◈</span> Core Engineering Competencies
+                <span class="section-rune">◈</span> Core Software Engineering Competencies
             </h2>
             <div class="timeline">
                 <div class="timeline-item" style="--delay: 0.4s">
@@ -149,19 +154,19 @@
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3 class="timeline-title">Embedded Systems Focus</h3>
-                            <span class="badge active-badge">Specialization</span>
+                            <h3 class="timeline-title">Software Development Fundamentals</h3>
+                            <span class="badge active-badge">Career Focus</span>
                         </div>
-                        <p class="timeline-subtitle">Hardware-Software Integration</p>
+                        <p class="timeline-subtitle">Programming & Problem Solving</p>
                         <ul class="timeline-list">
-                            <li><strong>Systems & Low-Level:</strong> C, C++, Embedded C</li>
-                            <li><strong>Microcontrollers:</strong> Arduino, ESP32, STM32</li>
-                            <li>Designing firmware and control logic for microcontroller-based systems.</li>
-                            <li>Bridging hardware circuits with software logic for reliable embedded products.</li>
-                            <li>Working with digital logic design, sensors, and peripheral interfacing (GPIO, I2C, SPI, UART).</li>
-                            <li>Debugging real-time embedded behavior across multiple hardware platforms.</li>
-                            <li>Wireless and IoT-capable development using ESP32's built-in Wi-Fi/Bluetooth.</li>
-                            <li>Performance-focused C++ programming, including memory and resource-constrained environments.</li>
+                            <li><strong>Core Programming Languages:</strong> C, C++, Java, Python, JavaScript, PHP, SQL</li>
+                            <li><strong>Additional Languages to Explore:</strong> TypeScript, C#, Go, Kotlin, Rust, Ruby</li>
+                            <li><strong>Problem Solving:</strong> Breaking requirements into clear, testable steps.</li>
+                            <li><strong>Data Structures & Algorithms:</strong> Building foundational knowledge through coursework and practice.</li>
+                            <li><strong>Object-Oriented Programming:</strong> Learning to organize code into reusable classes and components.</li>
+                            <li><strong>Software Design:</strong> Writing readable, modular code and improving it through iteration.</li>
+                            <li><strong>Debugging & Testing:</strong> Finding errors, testing expected behavior, and refining solutions.</li>
+                            <li><strong>Computer Engineering Foundation:</strong> Understanding how computer systems and hardware interact with software.</li>
                         </ul>
                     </div>
                 </div>
@@ -170,7 +175,7 @@
 
         <div class="resume-section">
             <h2 class="resume-section-title">
-                <span class="section-rune">◈</span> Supporting Technical Skills
+                <span class="section-rune">◈</span> Supporting Software & Development Skills
             </h2>
             <div class="timeline">
                 <div class="timeline-item" style="--delay: 0.5s">
@@ -180,18 +185,19 @@
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3 class="timeline-title">Application & Full-Stack Development</h3>
+                            <h3 class="timeline-title">Web & Application Development</h3>
                             <span class="badge">Cross-Disciplinary</span>
                         </div>
-                        <p class="timeline-subtitle">Used to build tooling, dashboards, and complete systems around embedded and engineering projects</p>
+                        <p class="timeline-subtitle">Tools and technologies for building interactive applications and data-driven websites</p>
                         <ul class="timeline-list">
-                            <li><strong>Application Development:</strong> Java, Python</li>
-                            <li><strong>Web Engineering Ecosystem:</strong> HTML, CSS, JavaScript, PHP</li>
-                            <li><strong>Databases:</strong> MySQL, MySQLi, and general relational database design</li>
-                            <li><strong>Version Control:</strong> Git & GitHub for source control and collaboration</li>
-                            <li>Building admin dashboards and monitoring tools for hardware/software systems.</li>
-                            <li>Designing normalized database schemas and writing efficient queries.</li>
-                            <li>Managing branches, pull requests, and project history through Git workflows.</li>
+                            <li><strong>Web Foundations:</strong> HTML, CSS, JavaScript, TypeScript, responsive design, accessibility, browser APIs</li>
+                            <li><strong>Frontend Frameworks to Explore:</strong> React, Next.js, Vue.js, Angular</li>
+                            <li><strong>Backend Languages & Frameworks:</strong> PHP, Python (Flask/Django), Java (Spring), JavaScript/TypeScript (Node.js/Express), C# (.NET) — learning roadmap</li>
+                            <li><strong>Databases:</strong> MySQL, SQL, MySQLi, PostgreSQL (to explore), relational modeling and query fundamentals</li>
+                            <li><strong>Programming Practice:</strong> Java, Python, C, C++, JavaScript, and PHP; build toward TypeScript and backend frameworks</li>
+                            <li><strong>Version Control:</strong> Git and GitHub for tracking changes and managing projects</li>
+                            <li><strong>Development Workflow:</strong> Requirements, implementation, debugging, testing, and documentation</li>
+                            <li><strong>Professional Growth:</strong> Collaboration, clear communication, and continuous learning</li>
                         </ul>
                     </div>
                 </div>
@@ -201,32 +207,32 @@
         <div class="skills-grid">
             <div class="skill-card" style="--delay: 0.1s">
                 <div class="skill-icon">🔌</div>
-                <div class="skill-name">Embedded C / C++</div>
+                <div class="skill-name">Programming (C/C++/Java/Python)</div>
                 <div class="skill-bar"><div class="skill-fill" style="--width: 85%"></div></div>
             </div>
             <div class="skill-card" style="--delay: 0.2s">
                 <div class="skill-icon">🛠️</div>
-                <div class="skill-name">Microcontrollers (ESP32/STM32)</div>
+                <div class="skill-name">Problem Solving & Algorithms</div>
                 <div class="skill-bar"><div class="skill-fill" style="--width: 80%"></div></div>
             </div>
             <div class="skill-card" style="--delay: 0.3s">
                 <div class="skill-icon">⚡</div>
-                <div class="skill-name">Digital Logic & Circuits</div>
+                <div class="skill-name">Object-Oriented Programming</div>
                 <div class="skill-bar"><div class="skill-fill" style="--width: 80%"></div></div>
             </div>
             <div class="skill-card" style="--delay: 0.4s">
                 <div class="skill-icon">🗄️</div>
-                <div class="skill-name">Databases (MySQL)</div>
+                <div class="skill-name">Database Fundamentals (MySQL)</div>
                 <div class="skill-bar"><div class="skill-fill" style="--width: 78%"></div></div>
             </div>
             <div class="skill-card" style="--delay: 0.5s">
                 <div class="skill-icon">🌿</div>
-                <div class="skill-name">Git & GitHub</div>
+                <div class="skill-name">Version Control (Git/GitHub)</div>
                 <div class="skill-bar"><div class="skill-fill" style="--width: 82%"></div></div>
             </div>
             <div class="skill-card" style="--delay: 0.6s">
                 <div class="skill-icon">🌐</div>
-                <div class="skill-name">Full-Stack (JS/PHP)</div>
+                <div class="skill-name">Web Development (HTML/CSS/JS)</div>
                 <div class="skill-bar"><div class="skill-fill" style="--width: 75%"></div></div>
             </div>
         </div>
