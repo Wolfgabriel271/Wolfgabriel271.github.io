@@ -409,9 +409,8 @@ nav.nav-scrolled { box-shadow: 0 4px 24px rgba(0,0,0,.40); border-bottom-color: 
 
 .mobile-menu-overlay {
     display: none; position: fixed; inset: 0;
-    background: rgba(14,12,10,.62); z-index: 498;
+    background: rgba(7,9,13,.72); z-index: 900; /* must stay BELOW nav (z 1000): the drawer lives inside nav */
     opacity: 0; transition: opacity var(--t2);
-    backdrop-filter: blur(4px);
 }
 .mobile-menu-overlay.active { display: block; opacity: 1; }
 
@@ -1481,8 +1480,8 @@ body.page-ready main { animation: cp-page-enter .65s var(--cp-ease) both; }
 @keyframes cp-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Mobile drawer: safe-area aware, scrollable, and reliably above page content. */
-.mobile-menu-overlay { z-index: 1090; }
 @media (max-width: 900px) {
+  nav { backdrop-filter: none; -webkit-backdrop-filter: none; } /* would trap the fixed drawer inside the 64px nav */
   nav { position: sticky; padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
   .nav-links {
     z-index: 1100;
@@ -1510,6 +1509,7 @@ body.page-ready main { animation: cp-page-enter .65s var(--cp-ease) both; }
   .nav-links.open li:nth-child(5) { transition-delay: .16s; }
   .nav-links.open li:nth-child(6) { transition-delay: .19s; }
   .nav-links a { font-size: .9rem; padding: 15px 0; }
+  .nav-actions { position: relative; z-index: 1200; } /* keep hamburger / ✕ above the drawer */
   .hero { min-height: auto; padding-top: clamp(70px, 12vh, 120px); padding-bottom: 90px; }
   .hero-cta-group { align-items: center; }
   .stats-bar { justify-content: center; }
@@ -1592,3 +1592,37 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 ::selection { color:#080b10; background:var(--hud-cyan); }
 @media (max-width:700px) { #cyber-hud { left:10px; bottom:max(10px,env(safe-area-inset-bottom)); font-size:.61rem; padding:7px 9px; } }
 @media (prefers-reduced-motion:reduce) { #cyber-hud .hud-dot { animation:none; } .cyber-pointer-glow { display:none; } }
+
+
+/* ============================================================
+   25. PHONE FIXES
+   ============================================================ */
+
+/* The overlay (z 1090) sat ABOVE the nav (z 1000) — and the drawer lives
+   inside the nav — so every tap on a menu link hit the overlay instead and
+   just closed the menu. Overlay must be below the nav. */
+.mobile-menu-overlay { z-index: 900; backdrop-filter: none; background: rgba(7, 9, 13, .72); }
+
+@media (max-width: 900px) {
+  /* backdrop-filter on <nav> makes it the containing block of its
+     position:fixed child (.nav-links drawer). The drawer was then sized and
+     placed against the 64px nav and, pushed off-screen with translateX, made
+     the whole page ~1.9x wider than the screen (horizontal scroll/zoom-out). */
+  nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+}
+
+/* background-attachment: fixed is ignored/janky on phones. */
+@media (hover: none), (pointer: coarse) {
+  body { background-attachment: scroll; }
+}
+
+/* The drawer (z 1100) covered the hamburger/✕ button, so there was no
+   visible way to close the menu. Keep the nav buttons above the drawer. */
+@media (max-width: 900px) {
+  .nav-actions { position: relative; z-index: 1200; }
+}
+
+/* The fixed "SYS ONLINE" HUD sat on top of page content on phones. */
+@media (max-width: 600px) {
+  #cyber-hud { display: none; }
+}
